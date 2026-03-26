@@ -8,21 +8,21 @@ terraform {
 }
 
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
 }
 
 
 resource "aws_instance" "bia-dev" {
-  ami           = "ami-02f3f602d23f1659d"
-  instance_type = "t3.micro"
+  ami           = var.ami
+  instance_type = var.instance_type
   tags = {
-    ambiente = "dev"
-    Name = var.instance_name
+    ambiente = var.environment
+    Name     = var.instance_name
   }
   vpc_security_group_ids = [aws_security_group.bia_dev_tf.id]
   root_block_device {
-    volume_size = 8 
+    volume_size = var.volume_size
     volume_type = "gp3"
   }
-  
+
 }
